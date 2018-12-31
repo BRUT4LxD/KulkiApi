@@ -18,7 +18,7 @@ public class GameController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/game")
+    @GetMapping("/game/{id}")
     public List<Game> getAllGamesById(@PathVariable Integer id){
         List<Game> games = gameRepository.findGamesbyUserId(id);
         return games;
