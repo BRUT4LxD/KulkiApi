@@ -36,4 +36,9 @@ public class GameController {
         game.setUser(user);
         return gameRepository.save(game);
     }
+
+    @GetMapping("/games/top5")
+    public List<Game> getTop5Games(){
+        return gameRepository.findTop5OrderByResultDesc();
+    }
 }
