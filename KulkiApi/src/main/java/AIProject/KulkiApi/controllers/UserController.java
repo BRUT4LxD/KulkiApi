@@ -1,10 +1,8 @@
 package AIProject.KulkiApi.controllers;
 
 import AIProject.KulkiApi.Model.User;
+import AIProject.KulkiApi.services.UserService;
 import org.springframework.web.bind.annotation.*;
-import AIProject.KulkiApi.Repositories.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -12,67 +10,25 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    private final UserRepository userRepository;
-    private Logger logger;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository)
-    {
-        this.userRepository = userRepository;
-        this.logger = LoggerFactory.getLogger(UserController.class);
-    }
+    public UserController(UserService userService) { this.userService = userService; }
 
     @GetMapping("/user")
     public User getUser(@RequestParam("email") String email, @RequestParam("password") String password){
-
-        User user;
-        try{
-            user = userRepository.findByEmailAndPassword(email,password);
-            logger.info("User has been gathered by email: " + email);
-        }
-        catch(Exception e){
-            logger.error("There was a problem with gathering User by email and password");
-            throw e;
-        }
-        return user;
+        return userService.getUser(email, password);
     }
 
     @PostMapping("/user")
     public User addUser(@RequestBody User user){
-        try{
-            userRepository.save(user);
-            logger.info("User with id=" + user.getId() + " has been successfully added to database");
-        }
-        catch(Exception e){
-            logger.error("There was a problem with adding user with id=" + user.getId());
-            throw e;
-        }
-        return null;
+        return userService.addUser(user);
     }
     @GetMapping("/users")
     public List<User> getUsers(){
-        List<User> users;
-        try{
-            users = userRepository.findAll();
-            logger.info("All users has been retrieved from the database");
-        }
-        catch(Exception e){
-            logger.error("There was a problem with retrieving all users from the database");
-            throw e;
-        }
-        return users;
+        return userService.getUsers();
     }
     @GetMapping("/user/{id}")
     public User getUserById(@PathVariable("id") Integer id){
-        User user;
-        try{
-            user = userRepository.findById(id);
-            logger.info("User has been gathered by id: " + id);
-        }
-        catch(Exception e){
-            logger.error("There was a problem with gathering User by id");
-            throw e;
-        }
-
-        return user;
+        return userService.getUserById(id);
     }
 }
