@@ -77,4 +77,28 @@ public class GameService {
         }
         return games;
     }
+    public Integer timeSpentPlaying(Integer id){
+        Integer timeInSeconds = 0;
+        try{
+            timeInSeconds = gameRepository.findTimeSpentPlaying(id);
+            logger.info("Overall time spent playing has been retrieved from the database.");
+        }
+        catch( Exception e){
+            logger.info("There was a problem with gathering overall time spent playing from the database.", e);
+        }
+        return timeInSeconds;
+    }
+    public List<Game> getAllGamesOrderByDate(){
+
+        List<Game> games;
+        try{
+            games = gameRepository.findAllGamesOrderByDate();
+            logger.info("All games by date has been retrieved from the database.");
+        }
+        catch (Exception e){
+            logger.info("There was a problem with gathering all games by date from the database.");
+            return null;
+        }
+        return games;
+    }
 }

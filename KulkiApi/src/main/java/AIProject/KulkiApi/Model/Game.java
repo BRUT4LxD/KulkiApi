@@ -31,6 +31,9 @@ public class Game {
     @Column(name = "result", nullable = false)
     private int result;
 
+    @Column(name="time")
+    private Integer time;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "date", nullable = false, updatable = false)
     @CreatedDate

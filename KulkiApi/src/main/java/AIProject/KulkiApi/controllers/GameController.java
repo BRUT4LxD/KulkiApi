@@ -33,4 +33,14 @@ public class GameController {
     public List<Game> getTop5Games(){
         return gameService.getTop5Games();
     }
+
+    @GetMapping("/games/time/{id}")
+    public Integer timeSpentPlaying(@PathVariable Integer id){
+        return gameService.timeSpentPlaying(id);
+    }
+
+    @GetMapping("/gamesByDate")
+    public List<Game> gamesByDate(){
+        return gameService.getAllGamesOrderByDate();
+    }
 }
